@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://images.squarespace-cdn.com/content/v1/5e5d8376408f684dab86ae23/0882f3f5-9a7a-4be5-967a-49b018ab41b3/599_bit.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.6/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        daisyui: {
+          themes: ["light", "dark", "cupcake"],
+        },
+      }
+    </script>
+    <title>Vite + Svelte</title>
+  </head>
+  <body>
+    <div id="app" style="height: 100%; width:100%; padding: 0; margin: 0;"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+</style>
