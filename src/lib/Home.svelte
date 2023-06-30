@@ -1,35 +1,23 @@
 <script>
+    import {navigate} from "svelte-navigator";
 
+    const serverURL = "http://localhost:8000"
 </script>
 
-<div class="drawer">
-    <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
-    <div class="drawer-content">
-        <div class="navbar bg-base-100 w-screen">
-            <div class="flex-none">
-                <label for="my-drawer" class="btn btn-square btn-ghost drawer-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         class="inline-block w-5 h-5 stroke-current">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </label>
-            </div>
-            <div class="flex-1">
-            </div>
-            <div class="flex-none">
-                <p class="text-2xl">sendbyte</p>
-            </div>
+<div class="hero min-h-screen"
+     style={`background-image: url(${serverURL}/home/bg);`}>
+    <div class="hero-overlay bg-opacity-60"></div>
+    <div class="hero-content text-center text-neutral-content">
+        <div class="max-w-md">
+            <h1 class="text-5xl font-bold text-white">Sendbyte</h1>
+            <h2 class="text-2xl mt-2 font-bold text-white">A sane file transfer solution</h2>
+            <p class="py-6 text-white">Do you ever have any issues sending files across machines? Whether it be an
+                old
+                device without the new, an Apple device not cooperating with a Windows one, or a bad Bluetooth
+                connection, Sendbyte has you covered. If you can connect to the internet, you can trust that we
+                will deliver the file every time.</p>
+            <button class="btn btn-primary" on:click={() => navigate("/send")}>Get Started</button>
         </div>
-        <h1>content</h1>
-    </div>
-    <div class="drawer-side">
-        <label for="my-drawer" class="drawer-overlay"></label>
-        <ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
-            <!-- Sidebar content here -->
-            <li><a>Sidebar Item 1</a></li>
-            <li><a>Sidebar Item 2</a></li>
-        </ul>
     </div>
 </div>
 
