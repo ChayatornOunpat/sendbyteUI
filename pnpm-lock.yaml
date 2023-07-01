@@ -3,10 +3,12 @@ lockfileVersion: 5.4
 specifiers:
   '@sveltejs/vite-plugin-svelte': ^2.0.3
   svelte: ^3.55.1
+  svelte-file-dropzone: ^2.0.1
   svelte-navigator: ^3.2.2
   vite: ^4.2.0
 
 dependencies:
+  svelte-file-dropzone: 2.0.1_svelte@3.59.2
   svelte-navigator: 3.2.2_svelte@3.59.2
 
 devDependencies:
@@ -305,6 +307,13 @@ packages:
       '@esbuild/win32-x64': 0.17.19
     dev: true
 
+  /file-selector/0.2.4:
+    resolution: {integrity: sha512-ZDsQNbrv6qRi1YTDOEWzf5J2KjZ9KMI1Q2SGeTkCJmNNW25Jg4TW4UMcmoqcg4WrAyKRcpBXdbWRxkfrOzVRbA==}
+    engines: {node: '>= 10'}
+    dependencies:
+      tslib: 2.6.0
+    dev: false
+
   /fsevents/2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -380,6 +389,15 @@ packages:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /svelte-file-dropzone/2.0.1_svelte@3.59.2:
+    resolution: {integrity: sha512-VDx5h+YSh4BZOk3O3R/rnLZqOlWTnUEBx74DmZBU3LS3bulMXqXCs8zl8rjuhcCWdNKh4Rhg89dJJ0f6rOPEWw==}
+    peerDependencies:
+      svelte: ^3.54.0
+    dependencies:
+      file-selector: 0.2.4
+      svelte: 3.59.2
+    dev: false
 
   /svelte-hmr/0.15.2_svelte@3.59.2:
     resolution: {integrity: sha512-q/bAruCvFLwvNbeE1x3n37TYFb3mTBJ6TrCq6p2CoFbSTNhDE9oAtEfpy+wmc9So8AG0Tja+X0/mJzX9tSfvIg==}
