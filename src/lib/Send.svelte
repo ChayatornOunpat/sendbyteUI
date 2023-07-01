@@ -1,13 +1,55 @@
 <script>
     import Footer from "./Footer.svelte";
+    import JSZip from "jszip";
 
     const serverURL = "http://localhost:8000"
     import Dropzone from "svelte-file-dropzone/Dropzone.svelte";
+    import {navigate} from "svelte-navigator";
 
+    let code;
     let files = {
         accepted: [],
         rejected: []
     };
+
+    async function handleSend() {
+        const zip = new JSZip();
+
+        for (const file of files.accepted) {
+            const reader = new FileReader();
+
+            await new Promise((resolve, reject) => {
+                reader.onload = () => {
+                    zip.file(file.name, reader.result);
+                    resolve();
+                };
+
+                reader.onerror = reject;
+
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        try {
+            const content = await zip.generateAsync({type: "blob"});
+            const formData = new FormData();
+            formData.append('file', content, 'zipped_files.zip');
+
+            const response = await fetch(`${serverURL}/send/submitfile`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                alert('content sent successfully!');
+                console.log(await response.json())
+            } else {
+                alert('Failed to send content:', response.status, response.statusText);
+            }
+        } catch (error) {
+            alert("Failed to send content:", error);
+        }
+    }
 
     function handleFilesSelect(e) {
         const {acceptedFiles, fileRejections} = e.detail;
@@ -32,7 +74,7 @@
                 {/each}
             </ol>
             <div class="card-actions mt-2 mb-2">
-                <button class="btn btn-primary w-20">Go</button>
+                <button on:click={() => handleSend()} class="btn btn-primary w-20">Go</button>
             </div>
         </div>
     </div>
