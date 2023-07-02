@@ -6,12 +6,14 @@
     import Dropzone from "svelte-file-dropzone/Dropzone.svelte";
 
     let code = null;
+    let loading = false;
     let files = {
         accepted: [],
         rejected: []
     };
 
     async function handleSend() {
+        loading = true;
         const zip = new JSZip();
 
         for (const file of files.accepted) {
@@ -41,12 +43,15 @@
 
             if (response.ok) {
                 alert('content sent successfully!');
+                loading = false
                 const message = await response.json()
                 code = message['code']
             } else {
+                loading = false
                 alert('Failed to send content:', response.status, response.statusText);
             }
         } catch (error) {
+            loading = false
             alert("Failed to send content:", error);
         }
     }
@@ -71,30 +76,38 @@
             </div>
             <div class="card flex-shrink-0 w-full max-w-sm bg-stone-800 shadow-xl">
                 <figure class="px-1 pt-1">
-                    {#if code === null}
-                        <Dropzone on:drop={handleFilesSelect}/>
-                    {:else}
-                        <Dropzone on:drop={handleFilesSelect}/>
+                    {#if (loading === false)}
+                        {#if code === null}
+                            <Dropzone on:drop={handleFilesSelect}/>
+                        {:else}
+                            <Dropzone on:drop={handleFilesSelect}/>
+                        {/if}
                     {/if}
                 </figure>
                 <div class="card-body items-center text-center">
-                    {#if code === null}
-                        <h2 class="card-title mb-2 mt-1">Send list</h2>
+                    {#if loading === false}
+                        {#if code === null}
+                            <h2 class="card-title mb-2 mt-1">Send list</h2>
+                        {:else}
+                            <h2 class="card-title mb-2 mt-1">{code}</h2>
+                        {/if}
+                        {#if code === null}
+                            <ol>
+                                {#each files.accepted as item}
+                                    <li>{item.name}</li>
+                                {/each}
+                            </ol>
+                        {:else}
+                            <p>is your code</p>
+                        {/if}
+                        {#if code === null}
+                            <div class="card-actions mt-2 mb-2">
+                                <button on:click={() => handleSend()} class="btn btn-primary w-20">Go</button>
+                            </div>
+                        {/if}
                     {:else}
-                        <h2 class="card-title mb-2 mt-1">{code}</h2>
-                    {/if}
-                    {#if code === null}
-                        <ol>
-                            {#each files.accepted as item}
-                                <li>{item.name}</li>
-                            {/each}
-                        </ol>
-                    {:else}
-                        <p>is your code</p>
-                    {/if}
-                    {#if code === null}
-                        <div class="card-actions mt-2 mb-2">
-                            <button on:click={() => handleSend()} class="btn btn-primary w-20">Go</button>
+                        <div class="flex justify-center items-center">
+                            <span class="loading loading-dots loading-lg"></span>
                         </div>
                     {/if}
                 </div>
