@@ -4,9 +4,8 @@
 
     const serverURL = "http://localhost:8000"
     import Dropzone from "svelte-file-dropzone/Dropzone.svelte";
-    import {navigate} from "svelte-navigator";
 
-    let code;
+    let code = null;
     let files = {
         accepted: [],
         rejected: []
@@ -42,7 +41,8 @@
 
             if (response.ok) {
                 alert('content sent successfully!');
-                console.log(await response.json())
+                const message = await response.json()
+                code = message['code']
             } else {
                 alert('Failed to send content:', response.status, response.statusText);
             }
@@ -58,23 +58,46 @@
     }
 </script>
 
-<div class="h-screen flex items-center flex-col">
-    <p class="mt-12 mb-12 text-lg text-center w-8/12">Drop your file here. When you click "Send," you'll get a link to
-        the file, a QR code that leads to it, or a code
-        that you can enter on our site's "Receive" page.</p>
-    <div class="card bg-base-100 shadow-xl w-10/12 mb-24">
-        <figure class="px-1 pt-1">
-            <Dropzone on:drop={handleFilesSelect}/>
-        </figure>
-        <div class="card-body items-center text-center">
-            <h2 class="card-title mb-2 mt-1">Send list</h2>
-            <ol>
-                {#each files.accepted as item}
-                    <li>{item.name}</li>
-                {/each}
-            </ol>
-            <div class="card-actions mt-2 mb-2">
-                <button on:click={() => handleSend()} class="btn btn-primary w-20">Go</button>
+<div>
+    <div class="hero min-h-screen"
+         style={`background-image: url(${serverURL}/send/bg);`}>
+        <div class="hero-overlay bg-opacity-60"></div>
+        <div class="hero-content flex-col lg:flex-row-reverse">
+            <div class="text-center lg:text-left">
+                <h1 class="text-5xl font-bold">Send!</h1>
+                <p class="py-6">Drop your file here. When you click "Send," you'll get a link to
+                    the file, a QR code that leads to it, or a code
+                    that you can enter on our site's "Receive" page.</p>
+            </div>
+            <div class="card flex-shrink-0 w-full max-w-sm bg-stone-800 shadow-xl">
+                <figure class="px-1 pt-1">
+                    {#if code === null}
+                        <Dropzone on:drop={handleFilesSelect}/>
+                    {:else}
+                        <Dropzone on:drop={handleFilesSelect}/>
+                    {/if}
+                </figure>
+                <div class="card-body items-center text-center">
+                    {#if code === null}
+                        <h2 class="card-title mb-2 mt-1">Send list</h2>
+                    {:else}
+                        <h2 class="card-title mb-2 mt-1">{code}</h2>
+                    {/if}
+                    {#if code === null}
+                        <ol>
+                            {#each files.accepted as item}
+                                <li>{item.name}</li>
+                            {/each}
+                        </ol>
+                    {:else}
+                        <p>is your code</p>
+                    {/if}
+                    {#if code === null}
+                        <div class="card-actions mt-2 mb-2">
+                            <button on:click={() => handleSend()} class="btn btn-primary w-20">Go</button>
+                        </div>
+                    {/if}
+                </div>
             </div>
         </div>
     </div>

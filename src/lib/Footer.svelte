@@ -1,8 +1,8 @@
 <script>
-    const serverURL = "http://localhost:8000"
+
 </script>
 
-<footer class="footer footer-center p-10 bg-base-200 text-primary-content mt-auto">
+<footer class="footer footer-center p-10 bg-stone-800 text-primary-content mt-auto">
     <div>
         <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
              clip-rule="evenodd" class="inline-block fill-current">
@@ -11,7 +11,7 @@
         <p class="font-bold">
             Greyscale Software Co., Ltd. <br/>Peer into future
         </p>
-        <p>Copyright © 2023-2023 All right reserved</p>
+        <p>Copyright © 2023 All right reserved</p>
     </div>
     <div>
         <div class="grid grid-flow-col gap-4">
