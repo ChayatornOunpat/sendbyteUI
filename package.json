@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "jszip": "^3.10.1",
+    "qrcode-generator": "^1.4.4",
     "svelte-file-dropzone": "^2.0.1",
     "svelte-navigator": "^3.2.2"
   }
