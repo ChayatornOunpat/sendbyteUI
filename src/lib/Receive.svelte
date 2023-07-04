@@ -19,8 +19,18 @@
     async function downloadFile(url) {
         try {
             const response = await fetch(url);
-            const blob = await response.blob();
-            await unzipAndDownload(blob);
+            if (response.ok) {
+                const blob = await response.blob();
+                await unzipAndDownload(blob);
+            } else {
+                loading = false;
+                if ((response.status) === 404){
+                    alert("file not found")
+                } else {
+                    alert(`Error downloading file: ${response.statusText}`)
+                }
+            }
+
         } catch (error) {
             loading = false
             console.error('Error downloading file:', error);
