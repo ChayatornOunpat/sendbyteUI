@@ -72,7 +72,7 @@
 
 <div class="min-h-screen">
     <div class="hero min-h-screen"
-         style={`background-image: url(${serverURL}/receive/bg);`}>
+         style={`background-image: url(${serverURL}/bg/receive);`}>
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center lg:text-left">
@@ -90,7 +90,7 @@
                             <input type="text" placeholder="code" class="input input-bordered" bind:value={code}/>
                         </div>
                         <div class="form-control mt-6">
-                            <button class="btn btn-primary" on:click={handleDownload}>Download</button>
+                            <button class="btn btn-primary text-white" on:click={handleDownload}>Download</button>
                         </div>
                     {:else}
                         <div class="flex justify-center items-center">

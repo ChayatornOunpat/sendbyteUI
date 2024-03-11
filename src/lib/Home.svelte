@@ -7,7 +7,7 @@
 
 <div>
     <div class="hero min-h-screen"
-         style={`background-image: url(${serverURL}/home/bg);`}>
+         style={`background-image: url(${serverURL}/bg/home);`}>
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content text-center text-neutral-content">
             <div class="max-w-md">
@@ -19,7 +19,7 @@
                     Bluetooth
                     connection, Sendbyte has you covered. If you can connect to the internet, you can trust that we
                     will deliver the file every time.</p>
-                <button class="btn btn-primary" on:click={() => navigate("/send")}>Get Started</button>
+                <button class="btn btn-primary text-white" on:click={() => navigate("/send")}>Get Started</button>
             </div>
         </div>
     </div>

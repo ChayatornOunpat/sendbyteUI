@@ -97,7 +97,7 @@
 
 <div>
     <div class="hero min-h-screen"
-         style={`background-image: url(${serverURL}/send/bg);`}>
+         style={`background-image: url(${serverURL}/bg/send);`}>
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center lg:text-left">
@@ -136,11 +136,11 @@
                         {/if}
                         {#if code === null}
                             <div class="card-actions mt-2 mb-2">
-                                <button on:click={() => handleSend()} class="btn btn-primary w-20">Go</button>
+                                <button on:click={() => handleSend()} class="btn btn-primary w-20 text-white">Go</button>
                             </div>
                         {:else}
                             <div class="card-actions mt-2 mb-2">
-                                <button on:click={back} class="btn btn-primary w-20">return</button>
+                                <button on:click={back} class="btn btn-primary w-20 text-white">return</button>
                             </div>
                         {/if}
                     {:else}
