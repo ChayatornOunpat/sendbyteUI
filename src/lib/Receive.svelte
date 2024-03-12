@@ -17,18 +17,16 @@
         }
     });
 
-    function progressHandler(event) {
-        if (event.lengthComputable) {
-            const percentComplete = (event.loaded / event.total) * 100;
-            progress = Math.round(percentComplete)
-        }
-    }
-
     async function downloadFile(url) {
         const xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
 
-        xhr.upload.addEventListener('progress', progressHandler);
+        xhr.onprogress = function (event) {
+            if (event.lengthComputable) {
+                const percentComplete = (event.loaded / event.total) * 100;
+                progress = Math.round(percentComplete)
+            }
+        };
 
         xhr.onloadend = function () {
             if (xhr.status === 200) {
