@@ -79,6 +79,7 @@
     async function handleDownload() {
         if (code !== null) {
             loading = true;
+            progress = 0
             await downloadFile(`${serverURL}/receive/files/${code}`)
         }
     }

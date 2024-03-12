@@ -91,14 +91,14 @@
                 if (xhr.status === 200) {
                     // The upload was successful
                     loading = false;
-                    progress = null
+                    progress = 0
                     const message = JSON.parse(xhr.responseText);
                     code = message['code'];
                     genQr();
                 } else {
                     // There was an error
                     loading = false;
-                    progress = null
+                    progress = 0
                     alert(`Failed to send content: ${xhr.status}, ${xhr.statusText}`);
                 }
             };
