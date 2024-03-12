@@ -9,6 +9,7 @@
     let code = null;
     let loading = false;
     let qrURL = null;
+    let progress = 0;
     let files = {
         accepted: [],
         rejected: []
@@ -63,28 +64,56 @@
             });
         }
 
+        function progressHandler(event) {
+            if (event.lengthComputable) {
+                const percentComplete = (event.loaded / event.total) * 100;
+                progress = Math.round(percentComplete)
+            }
+        }
+
         try {
             const content = await zip.generateAsync({type: "blob"});
+
+            // Create a FormData object
             const formData = new FormData();
             formData.append('file', content, 'zipped_files.zip');
 
-            const response = await fetch(`${serverURL}/send/submitfile`, {
-                method: 'POST',
-                body: formData,
-            });
+            // Create a new XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
 
-            if (response.ok) {
-                loading = false
-                const message = await response.json()
-                code = message['code']
-                genQr()
-            } else {
-                loading = false
-                alert(`Failed to send content: , ${response.status}, ${response.statusText}`);
-            }
+            // Configure it: POST-request, the URL, and whether to perform the operation asynchronously
+            xhr.open('POST', `${serverURL}/send/submitfile`, true);
+
+            xhr.upload.addEventListener('progress', progressHandler);
+
+            // Set up a function to handle the response
+            xhr.onloadend = function () {
+                if (xhr.status === 200) {
+                    // The upload was successful
+                    loading = false;
+                    progress = null
+                    const message = JSON.parse(xhr.responseText);
+                    code = message['code'];
+                    genQr();
+                } else {
+                    // There was an error
+                    loading = false;
+                    progress = null
+                    alert(`Failed to send content: ${xhr.status}, ${xhr.statusText}`);
+                }
+            };
+
+            // Set up a function to handle any errors
+            xhr.onerror = function () {
+                loading = false;
+                alert('Network error during file upload.');
+            };
+
+            // Send the FormData object with the file
+            xhr.send(formData);
         } catch (error) {
-            loading = false
-            alert(`Failed to send content:, ${error}`);
+            loading = false;
+            alert(`Failed to send content: ${error}`);
         }
     }
 
@@ -136,7 +165,8 @@
                         {/if}
                         {#if code === null}
                             <div class="card-actions mt-2 mb-2">
-                                <button on:click={() => handleSend()} class="btn btn-primary w-20 text-white">Go</button>
+                                <button on:click={() => handleSend()} class="btn btn-primary w-20 text-white">Go
+                                </button>
                             </div>
                         {:else}
                             <div class="card-actions mt-2 mb-2">
@@ -145,7 +175,8 @@
                         {/if}
                     {:else}
                         <div class="flex justify-center items-center">
-                            <span class="loading loading-dots loading-lg"></span>
+                            <div class="radial-progress" style={`--value:${progress};`} role="progressbar">{progress}%
+                            </div>
                         </div>
                     {/if}
                 </div>

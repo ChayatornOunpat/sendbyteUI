@@ -9,6 +9,7 @@
     const serverURL = "http://localhost:8000"
     let code = null;
     let loading = false;
+    let progress = 0;
 
     onMount(() => {
         if ($params.code !== '') {
@@ -16,25 +17,40 @@
         }
     });
 
+    function progressHandler(event) {
+        if (event.lengthComputable) {
+            const percentComplete = (event.loaded / event.total) * 100;
+            progress = Math.round(percentComplete)
+        }
+    }
+
     async function downloadFile(url) {
-        try {
-            const response = await fetch(url);
-            if (response.ok) {
-                const blob = await response.blob();
-                await unzipAndDownload(blob);
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+
+        xhr.upload.addEventListener('progress', progressHandler);
+
+        xhr.onloadend = function () {
+            if (xhr.status === 200) {
+                const blob = xhr.response;
+                unzipAndDownload(blob);
             } else {
                 loading = false;
-                if ((response.status) === 404){
-                    alert("file not found")
+                if (xhr.status === 404) {
+                    alert("File not found");
                 } else {
-                    alert(`Error downloading file: ${response.statusText}`)
+                    alert(`Error downloading file: ${xhr.statusText}`);
                 }
             }
+        };
 
-        } catch (error) {
-            loading = false
+        xhr.onerror = function (error) {
+            loading = false;
             console.error('Error downloading file:', error);
-        }
+        };
+
+        xhr.open('GET', url, true);
+        xhr.send();
     }
 
     async function unzipAndDownload(blob) {
@@ -94,7 +110,8 @@
                         </div>
                     {:else}
                         <div class="flex justify-center items-center">
-                            <span class='loading loading-dots loading-lg'></span>
+                            <div class="radial-progress" style={`--value:${progress};`} role="progressbar">{progress}%
+                            </div>
                         </div>
                     {/if}
                 </div>
