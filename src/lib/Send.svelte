@@ -2,8 +2,7 @@
     import Footer from "./Footer.svelte";
     import JSZip from "jszip";
     import QRCode from 'qrcode-generator';
-
-    const serverURL = "http://localhost:8000"
+    import {apiUrl, publicReceiveUrl} from "./api";
     import Dropzone from "svelte-file-dropzone/src/components/Dropzone.svelte";
 
     let code = null;
@@ -16,7 +15,7 @@
     };
 
     function genQr() {
-        const qrCodeData = `${serverURL}/receive/${code}`; // The data you want to encode in the QR code
+        const qrCodeData = publicReceiveUrl(code);
 
         const qr = QRCode(0, 'M');
         qr.addData(qrCodeData);
@@ -82,7 +81,7 @@
             const xhr = new XMLHttpRequest();
 
             // Configure it: POST-request, the URL, and whether to perform the operation asynchronously
-            xhr.open('POST', `${serverURL}/send/submitfile`, true);
+            xhr.open('POST', apiUrl("/send/submitfile"), true);
 
             xhr.upload.addEventListener('progress', progressHandler);
 
@@ -126,7 +125,7 @@
 
 <div>
     <div class="hero min-h-screen"
-         style={`background-image: url(${serverURL}/bg/send);`}>
+         style={`background-image: url(${apiUrl("/bg/send")});`}>
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center lg:text-left">

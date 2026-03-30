@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/c/Users/ASUS/WebstormProjects/**)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm list:*)"
+    ]
+  }
+}

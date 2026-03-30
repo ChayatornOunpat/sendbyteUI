@@ -3,10 +3,9 @@
     import JSZip from "jszip";
     import {onMount} from 'svelte';
     import {useParams} from "svelte-navigator";
+    import {apiUrl} from "./api";
 
     const params = useParams();
-
-    const serverURL = "http://localhost:8000"
     let code = null;
     let loading = false;
     let progress = 0;
@@ -80,14 +79,14 @@
         if (code !== null) {
             loading = true;
             progress = 0
-            await downloadFile(`${serverURL}/receive/files/${code}`)
+            await downloadFile(apiUrl(`/receive/files/${code}`))
         }
     }
 </script>
 
 <div class="min-h-screen">
     <div class="hero min-h-screen"
-         style={`background-image: url(${serverURL}/bg/receive);`}>
+         style={`background-image: url(${apiUrl("/bg/receive")});`}>
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center lg:text-left">

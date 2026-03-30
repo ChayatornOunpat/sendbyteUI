@@ -1,10 +1,10 @@
 <script>
-    const serverURL = "http://localhost:8000"
+    import {apiUrl} from "./api";
 </script>
 
 <footer class="footer footer-center p-10 bg-stone-800 text-primary-content mt-auto">
     <div>
-        <img class="w-20 mb-4" src= "http://localhost:8000/logo">
+        <img class="w-20 mb-4" src={apiUrl("/logo")}>
         <p class="font-bold text-white">
             Greyscale Software Co., Ltd. <br/>Peer into future
         </p>

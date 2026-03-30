@@ -1,13 +1,12 @@
 <script>
     import Footer from "./Footer.svelte";
     import {navigate} from "svelte-navigator";
-
-    const serverURL = "http://localhost:8000"
+    import {apiUrl} from "./api";
 </script>
 
 <div>
     <div class="hero min-h-screen"
-         style={`background-image: url(${serverURL}/bg/home);`}>
+         style={`background-image: url(${apiUrl("/bg/home")});`}>
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content text-center text-neutral-content">
             <div class="max-w-md">
