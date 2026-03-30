@@ -4,7 +4,7 @@
     import QRCode from 'qrcode-generator';
 
     const serverURL = "http://localhost:8000"
-    import Dropzone from "svelte-file-dropzone/Dropzone.svelte";
+    import Dropzone from "svelte-file-dropzone/src/components/Dropzone.svelte";
 
     let code = null;
     let loading = false;
